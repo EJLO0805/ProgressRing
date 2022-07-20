@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     var totalMoney: Double = 0
     let goalMoney : Double = 1000000
     var goalMoneyIndex = 0
+    var formatter = NumberFormatter()
     //製作一個灰色底的圓環
     func circleGray() {
         let circleBackground = UIBezierPath(arcCenter: circleView.center, radius: 80, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true)
@@ -31,6 +32,8 @@ class ViewController: UIViewController {
     }
     //存錢的進度圖
     func saveMoney() {
+        formatter.maximumFractionDigits = 2
+        formatter.roundingMode = NumberFormatter.RoundingMode.floor
         goalMoneyIndex = Int(totalMoney/goalMoney)
         let circleMoney = totalMoney - goalMoney * Double(goalMoneyIndex)
         var percentageGoal = circleMoney/goalMoney
@@ -50,9 +53,11 @@ class ViewController: UIViewController {
         showPercent.text = String(format: "%.1f", percentageGoal*100) + "%"
         moneyInput.text = ""
         showGoalMoneyIndex.text = "你已經存了\(goalMoneyIndex)次第一桶金"
-        showResult.text = "恭喜你存款有" + String(format: "%.2f", totalMoney/10000) + "萬元，距離下一個第一桶金還有" + String(format: "%.2f", (goalMoney-circleMoney)/10000) + "萬元"
+        showResult.text = "恭喜你存款有" + formatter.string(for: totalMoney/10000) + "萬元，距離下一個第一桶金還有" + formatter.string(for: (goalMoney-circleMoney)/10000) + "萬元"
     }
     func lostMoney () {
+        formatter.maximumFractionDigits = 2
+        formatter.roundingMode = NumberFormatter.RoundingMode.floor
         goalMoneyIndex = Int(totalMoney/goalMoney)
         let percentageGoal = totalMoney/goalMoney
         let degreeIn = CGFloat(percentageGoal)
@@ -67,7 +72,7 @@ class ViewController: UIViewController {
         view.layer.addSublayer(percentLayer)
         showPercent.text = String(format: "%.1f", percentageGoal*100) + "%"
         showGoalMoneyIndex.text = "你已經損失了\(-goalMoneyIndex)次第一桶金"
-        showResult.text = "很遺憾的您目前負債中，您的債務還有" + String(format: "%.2f", -totalMoney/10000) + "萬元，距離第一桶金還有" + String(format: "%.2f", (goalMoney-totalMoney)/10000) + "萬元"
+        showResult.text = "很遺憾的您目前負債中，您的債務還有" + formatter.string(for: -totalMoney/10000) + "萬元，距離第一桶金還有" + formatter.string(for: (goalMoney-totalMoney)/10000) + "萬元"
         moneyInput.text = ""
     }
     @IBOutlet weak var circleView: UIView!
