@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         showPercent.text = String(format: "%.1f", percentageGoal*100) + "%"
         moneyInput.text = ""
         showGoalMoneyIndex.text = "你已經存了\(goalMoneyIndex)次第一桶金"
-        showResult.text = "恭喜你存款有" + formatter.string(for: totalMoney/10000) + "萬元，距離下一個第一桶金還有" + formatter.string(for: (goalMoney-circleMoney)/10000) + "萬元"
+        showResult.text = "恭喜你存款有" + formatter.string(for: totalMoney/10000)! + "萬元，距離下一個第一桶金還有" + formatter.string(for: (goalMoney-circleMoney)/10000)! + "萬元"
     }
     func lostMoney () {
         formatter.maximumFractionDigits = 2
@@ -72,7 +72,7 @@ class ViewController: UIViewController {
         view.layer.addSublayer(percentLayer)
         showPercent.text = String(format: "%.1f", percentageGoal*100) + "%"
         showGoalMoneyIndex.text = "你已經損失了\(-goalMoneyIndex)次第一桶金"
-        showResult.text = "很遺憾的您目前負債中，您的債務還有" + formatter.string(for: -totalMoney/10000) + "萬元，距離第一桶金還有" + formatter.string(for: (goalMoney-totalMoney)/10000) + "萬元"
+        showResult.text = "很遺憾的您目前負債中，您的債務還有" + formatter.string(for: -totalMoney/10000)! + "萬元，距離第一桶金還有" + formatter.string(for: (goalMoney-totalMoney)/10000)! + "萬元"
         moneyInput.text = ""
     }
     @IBOutlet weak var circleView: UIView!
